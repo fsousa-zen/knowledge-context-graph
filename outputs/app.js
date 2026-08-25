@@ -366,7 +366,7 @@ if(mode==='knowledge')renderKnowledge();
 const renderBrainWithOrgEyebrow=renderBrain;
 renderBrain=()=>{
   renderBrainWithOrgEyebrow();
-  document.querySelector('.eyebrow').textContent='CONTEXT GRAPH / PRODUCT DESIGN ORG';
+  document.querySelector('.eyebrow').textContent='CONTEXT GRAPH / DESIGN ORG';
 };
 if(mode==='brain')renderBrain();
 
@@ -382,6 +382,21 @@ renderWork=()=>{
   controls.append(heading,filters);
 };
 if(document.querySelector('#graph-wrap').classList.contains('work-mode'))renderWork();
+
+const workspaceToggle=document.querySelector('#workspace-toggle');
+const workspaceMenu=document.querySelector('.workspace-menu');
+if(workspaceToggle&&workspaceMenu){
+  workspaceToggle.onclick=()=>{
+    const open=workspaceMenu.classList.toggle('open');
+    workspaceToggle.setAttribute('aria-expanded',String(open));
+  };
+  document.addEventListener('click',event=>{
+    if(!workspaceMenu.contains(event.target)){
+      workspaceMenu.classList.remove('open');
+      workspaceToggle.setAttribute('aria-expanded','false');
+    }
+  });
+}
 
 // Restore the original Work scrolling behaviour.
 renderWork=renderWorkWithStickyControls;
