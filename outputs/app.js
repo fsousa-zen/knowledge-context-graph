@@ -398,6 +398,21 @@ if(workspaceToggle&&workspaceMenu){
   });
 }
 
+// Keep Ultra's team owner and default delivery owner aligned.
+const ultraTeam=teams.find(team=>team.name==='Ultra');
+if(ultraTeam){
+  ultraTeam.designer='João Monteiro';
+  importedInitiatives.forEach(item=>{
+    if(item.team==='Ultra'&&(!item.designer||item.designer==='Unassigned'||item.designer==='No PD assigned'||item.ownerMode==='team-default')){
+      item.designer='João Monteiro';
+      item.ownerMode='team-default';
+    }
+  });
+  persistInitiatives();
+  applyImportedInitiatives();
+  renderOverview();
+}
+
 // Restore the original Work scrolling behaviour.
 renderWork=renderWorkWithStickyControls;
 if(document.querySelector('#graph-wrap').classList.contains('work-mode'))renderWork();
